@@ -17,8 +17,7 @@ ActiveRecord::Schema.define(version: 2019_09_14_181129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "micropost_id"
-    t.integer "users_id"
-    t.integer "post_id"
+    t.integer "user_id"
     t.index ["micropost_id"], name: "index_comments_on_micropost_id"
     t.index ["users_id"], name: "index_comments_on_users_id"
   end
