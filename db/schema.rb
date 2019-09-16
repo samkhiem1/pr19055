@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_131438) do
+ActiveRecord::Schema.define(version: 2019_09_14_181129) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "micropost_id"
+    t.integer "users_id"
+    t.integer "post_id"
+    t.index ["micropost_id"], name: "index_comments_on_micropost_id"
+    t.index ["users_id"], name: "index_comments_on_users_id"
+  end
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
@@ -38,6 +49,8 @@ ActiveRecord::Schema.define(version: 2019_09_12_131438) do
     t.integer "age"
     t.string "remember_digest"
     t.string "password_digest"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
 end
