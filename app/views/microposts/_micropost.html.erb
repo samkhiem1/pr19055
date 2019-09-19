@@ -2,14 +2,27 @@
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
   <span class="content">
-    <h3> <%= micropost.content %> </h3>
+    <strong> <%= micropost.content %> </strong>
     <%= image_tag micropost.picture.url if micropost.picture? %>
   </span>
+    <div class="col-md-6"; style="color:Blue;">
+    <%= micropost.likes.count %>
+    </div> 
   <span class="timestamp">
   Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   <% if current_user?(micropost.user) %>
     <%= link_to "delete", micropost, method: :delete,
                                      data: { confirm: "You sure?" } %>
+    <% if micropost.likes.exists?(user_id: current_user.id) %> 
+     <button type="button" class="btn btn-primary btn-lg">                                    
+      <%= button_to "unlike", like_path(id: micropost.likes.find_by(user_id: current_user.id).id), 
+        method: :delete %>   
+      </button>
+    <% else %>
+    <button type="button" class="btn btn-primary btn-lg">
+    <%= button_to "like", likes_path(micropost_id: micropost.id)%>
+    </button>
+    <% end %>
   <% end %>
 </span>
     <%= render 'comments/comments', micropost: micropost %>

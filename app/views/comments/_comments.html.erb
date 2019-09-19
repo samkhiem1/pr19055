@@ -1,5 +1,10 @@
 <% micropost.comments.each do |c|%>
  <ul>
   <li> <%= c.comment %> </li>
+  <span>  <% if current_user?(micropost.user) %>
+    <%= link_to "delete", c , method: :delete,
+                                     data: { confirm: "You sure?" } %>
+  <% end %>
+  </span>
   </ul>
 <% end %>

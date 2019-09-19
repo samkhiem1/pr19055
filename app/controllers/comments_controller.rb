@@ -1,20 +1,21 @@
 class CommentsController < ApplicationController
 
     def create
-        @post = Micropost.find(params[:comment][:micropost_id])
-        @comment = @post.comments.build(comment_params)
+        @micropost = Micropost.find(params[:comment][:micropost_id])
+        @comment = @micropost.comments.build(comment_params)
         @comment.user_id = current_user.id
         if @comment.save
             redirect_to root_path
         else
-            @feed_items = []
+            @feed_items = current_user.feed.paginate(page: params[:page])
             render 'static_pages/home'
         end
     end
 
     def destroy
-
-
+        @comment = Comment.find(params[:id])
+        @comment.destroy
+        redirect_to root_url
     end
 
 
